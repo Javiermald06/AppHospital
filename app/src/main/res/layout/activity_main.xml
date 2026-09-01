@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://android.com"
+    xmlns:tools="http://android.com"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F8FAFC"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_horizontal">
+
+        <!-- Espaciador Superior -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <!-- CONTENEDOR DEL LOGO ESTILIZADO ESSALUD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:cardCornerRadius="55dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#0072CE"
+            app:strokeWidth="4dp"
+            app:strokeColor="#FFFFFF"@
+            android:layout_marginBottom="16dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Ícono de Cruz Médica / Corazón que simula el Logo de EsSalud -->
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_add"
+                    app:tint="#FFFFFF"
+                    tools:ignore="UseAppTint" />
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- TEXTOS DE BIENVENIDA -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EsSenatino"
+            android:textColor="#0072CE"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.05" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seguridad Social de Salud para ti"
+            android:textColor="#64748B"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="36dp" />
+
+        <!-- CAMPO: USUARIO / CUENTA -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilUsuario"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Número de Asegurado o Usuario"
+            app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+            app:startIconTint="#0072CE"
+            app:boxStrokeColor="#0072CE"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:hintTextColor="#0072CE">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#1E293B"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- CAMPO: CONTRASEÑA -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:hint="Contraseña"
+            app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+            app:startIconTint="#0072CE"
+            app:endIconMode="password_toggle"
+            app:endIconTint="#64748B"
+            app:boxStrokeColor="#0072CE"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:hintTextColor="#0072CE">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="#1E293B"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- BOTÓN: INICIAR SESIÓN (Azul Institucional) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIniciarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Iniciar Sesión"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#0072CE"
+            app:cornerRadius="16dp"
+            app:elevation="4dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- BOTÓN: REGISTRARSE (Bordes Celestes Transparentes) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegistrarse"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Crear una Cuenta de Asegurado"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#00A1E4"
+            app:strokeColor="#00A1E4"
+            app:strokeWidth="2dp"
+            app:cornerRadius="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- TEXTO INFERIOR DE SOPORTE -->
+        <TextView
+            android:id="@+id/tvOlvidóClave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Olvidaste tu contraseña institucional?"
+            android:textColor="#00A1E4"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="auto"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</ScrollView>
