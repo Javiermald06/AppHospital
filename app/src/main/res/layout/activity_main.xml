@@ -28,7 +28,7 @@
             app:cardElevation="6dp"
             app:cardBackgroundColor="#0072CE"
             app:strokeWidth="4dp"
-            app:strokeColor="#FFFFFF"@
+            app:strokeColor="#FFFFFF"
             android:layout_marginBottom="16dp">
 
             <FrameLayout
