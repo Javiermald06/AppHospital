@@ -32,12 +32,6 @@ class AgendarCitaActivity : AppCompatActivity() {
         val puntos = listOf(binding.punto1, binding.punto2, binding.punto3, binding.punto4)
         val lineas = listOf(binding.linea1, binding.linea2, binding.linea3)
 
-        val cardsEspecialidad = listOf(
-            binding.cardMedicinaGeneral,
-            binding.cardCardiologia,
-            binding.cardTraumatologia
-        )
-
         val cardsCentro = listOf(
             binding.cardCentro1,
             binding.cardCentro2
@@ -82,34 +76,44 @@ class AgendarCitaActivity : AppCompatActivity() {
         }
 
         // ==========================================
-        // PASO 1: SELECCIÓN DE ESPECIALIDAD
+        // PASO 1: SELECCIÓN DE ESPECIALIDAD (Actualizado)
         // ==========================================
-        fun marcarEspecialidad(cardSeleccionada: MaterialCardView, especialidad: String, medico: String) {
-            cardsEspecialidad.forEach { card ->
-                card.strokeWidth = 0
-                card.strokeColor = Color.TRANSPARENT
-                card.setCardBackgroundColor(Color.WHITE)
+        
+        // 1. Aquí colocas todas tus especialidades (puedes agregar las 30 aquí)
+        val listaEspecialidades = arrayOf(
+            "Medicina General", 
+            "Cardiología", 
+            "Traumatología",
+            "Dermatología",
+            "Pediatría",
+            "Neurología",
+            "Gastroenterología",
+            "Oftalmología" // ... agrega el resto aquí
+        )
+
+        // 2. Crear el adaptador para el menú desplegable
+        val adapterEspecialidades = android.widget.ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            listaEspecialidades
+        )
+
+        // 3. Vincular el adaptador al AutoCompleteTextView
+        binding.dropdownEspecialidad.setAdapter(adapterEspecialidades)
+
+        // 4. Capturar la opción que elija el usuario
+        binding.dropdownEspecialidad.setOnItemClickListener { parent, _, position, _ ->
+            // Guardamos la especialidad seleccionada
+            especialidadSeleccionada = parent.getItemAtPosition(position).toString()
+            
+            // Lógica temporal para asignar un médico según la especialidad
+            medicoAsignado = when (especialidadSeleccionada) {
+                "Medicina General" -> "Dr. Carlos Ramírez"
+                "Cardiología" -> "Dra. Elena Ramos"
+                "Traumatología" -> "Dr. Marco Véliz"
+                else -> "Médico por asignar"
             }
-            cardSeleccionada.strokeWidth = 5
-            cardSeleccionada.strokeColor = Color.parseColor("#007ED2")
-            cardSeleccionada.setCardBackgroundColor(Color.parseColor("#EFF6FF"))
-
-            especialidadSeleccionada = especialidad
-            medicoAsignado = medico
         }
-
-        binding.cardMedicinaGeneral.setOnClickListener {
-            marcarEspecialidad(binding.cardMedicinaGeneral, "Medicina General", "Dr. Carlos Ramírez")
-        }
-        binding.cardCardiologia.setOnClickListener {
-            marcarEspecialidad(binding.cardCardiologia, "Cardiología", "Dra. Elena Ramos")
-        }
-        binding.cardTraumatologia.setOnClickListener {
-            marcarEspecialidad(binding.cardTraumatologia, "Traumatología", "Dr. Marco Véliz")
-        }
-
-        // Marcar la primera especialidad por defecto
-        marcarEspecialidad(binding.cardMedicinaGeneral, "Medicina General", "Dr. Carlos Ramírez")
 
         binding.btnSiguiente1.setOnClickListener {
             mostrarPaso(2)
