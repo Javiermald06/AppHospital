@@ -8,6 +8,7 @@ data class Medico(
     @PrimaryKey(autoGenerate = true)
     val id_medico: Int = 0,
     val nombre_medico: String,
+    val especialidad: String,
     val id_especialidad: Int, // Llave foránea (Foreign Key)
-    val id_centro: Int        // Llave foránea (Foreign Key)
+    val id_centro: Int // Llave foránea (Foreign Key)
 )
