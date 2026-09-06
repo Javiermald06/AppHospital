@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
-
+    <!-- hi -->
     <VideoView
         android:id="@+id/videoIntro"
         android:layout_width="match_parent"

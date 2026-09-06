@@ -19,7 +19,7 @@ class IntroVideoActivity : AppCompatActivity() {
         val videoIntro = findViewById<VideoView>(R.id.videoIntro)
         val btnSaltar = findViewById<MaterialButton>(R.id.btnSaltar)
 
-        // Ruta al video en res/raw/intro.mp4
+        // Ruta al video en res/raw/i ntro.mp4
         val videoUri = Uri.parse("android.resource://$packageName/${R.raw.intro}")
         videoIntro.setVideoURI(videoUri)
 
