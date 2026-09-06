@@ -15,8 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnIniciarSesion.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            // Abre primero el video introductorio
+            val intent = Intent(this, IntroVideoActivity::class.java)
             startActivity(intent)
         }
+
     }
 }
