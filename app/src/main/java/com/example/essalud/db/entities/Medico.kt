@@ -1,9 +1,9 @@
 package com.example.essalud.db.entities
+
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-//porsiaca
 
 @Entity(
     tableName = "tabla_medicos",
@@ -23,5 +23,7 @@ data class Medico(
     val nombre_medico: String,
     val especialidad: String,
     val id_centro: Int,
-    val dia_atencion: String // "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES"
+    val dia_atencion: String,
+    val dni: String,
+    val contrasena: String
 )

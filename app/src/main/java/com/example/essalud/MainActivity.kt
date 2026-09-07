@@ -66,29 +66,184 @@ class MainActivity : AppCompatActivity() {
         )
 
         // 3. Médicos con su especialidad y día de atención
+        // --- SEDE 1: Hospital III Daniel Alcides Carrión (id_centro = 1) ---
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 1, nombre_medico = "Dr. Carlos Ramírez", especialidad = "Medicina General", id_centro = 1, dia_atencion = "LUNES")
+            Medico(
+                id_medico = 1,
+                nombre_medico = "Dr. Carlos Ramírez",
+                especialidad = "Medicina General",
+                id_centro = 1,
+                dia_atencion = "LUNES",
+                dni = "10000001",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 2, nombre_medico = "Dra. Elena Ramos", especialidad = "Cardiología", id_centro = 1, dia_atencion = "MARTES")
+            Medico(
+                id_medico = 2,
+                nombre_medico = "Dra. Elena Ramos",
+                especialidad = "Cardiología",
+                id_centro = 1,
+                dia_atencion = "MARTES",
+                dni = "10000002",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 3, nombre_medico = "Dr. Marco Véliz", especialidad = "Traumatología", id_centro = 1, dia_atencion = "MIÉRCOLES")
+            Medico(
+                id_medico = 3,
+                nombre_medico = "Dr. Marco Véliz",
+                especialidad = "Traumatología",
+                id_centro = 1,
+                dia_atencion = "MIÉRCOLES",
+                dni = "10000003",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 4, nombre_medico = "Dr. Luis Morales", especialidad = "Dermatología", id_centro = 1, dia_atencion = "VIERNES")
+            Medico(
+                id_medico = 4,
+                nombre_medico = "Dr. Luis Morales",
+                especialidad = "Dermatología",
+                id_centro = 1,
+                dia_atencion = "VIERNES",
+                dni = "10000004",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 5, nombre_medico = "Dra. Sofía Castro", especialidad = "Pediatría", id_centro = 2, dia_atencion = "JUEVES")
+            Medico(
+                id_medico = 5,
+                nombre_medico = "Dr. Andrés Gómez",
+                especialidad = "Pediatría",
+                id_centro = 1,
+                dia_atencion = "JUEVES",
+                dni = "10000005",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 6, nombre_medico = "Dra. Patricia Mendoza", especialidad = "Neurología", id_centro = 2, dia_atencion = "LUNES")
+            Medico(
+                id_medico = 6,
+                nombre_medico = "Dra. Carmen Ríos",
+                especialidad = "Neurología",
+                id_centro = 1,
+                dia_atencion = "LUNES",
+                dni = "10000006",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 7, nombre_medico = "Dr. Fernando Quispe", especialidad = "Gastroenterología", id_centro = 1, dia_atencion = "MIÉRCOLES")
+            Medico(
+                id_medico = 7,
+                nombre_medico = "Dr. Fernando Quispe",
+                especialidad = "Gastroenterología",
+                id_centro = 1,
+                dia_atencion = "MIÉRCOLES",
+                dni = "10000007",
+                contrasena = "medico123"
+            )
         )
         db.medicoDao().insertarMedico(
-            Medico(id_medico = 8, nombre_medico = "Dra. Lucía Valdivia", especialidad = "Oftalmología", id_centro = 2, dia_atencion = "VIERNES")
+            Medico(
+                id_medico = 8,
+                nombre_medico = "Dr. Víctor Salazar",
+                especialidad = "Oftalmología",
+                id_centro = 1,
+                dia_atencion = "VIERNES",
+                dni = "10000008",
+                contrasena = "medico123"
+            )
+        )
+
+// --- SEDE 2: Centro Médico Metropolitano (id_centro = 2) ---
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 9,
+                nombre_medico = "Dr. Raúl Paredes",
+                especialidad = "Medicina General",
+                id_centro = 2,
+                dia_atencion = "LUNES",
+                dni = "20000001",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 10,
+                nombre_medico = "Dr. Hugo Benítez",
+                especialidad = "Cardiología",
+                id_centro = 2,
+                dia_atencion = "MARTES",
+                dni = "20000002",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 11,
+                nombre_medico = "Dra. Claudia Fuentes",
+                especialidad = "Traumatología",
+                id_centro = 2,
+                dia_atencion = "MIÉRCOLES",
+                dni = "20000003",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 12,
+                nombre_medico = "Dra. Natalia Vega",
+                especialidad = "Dermatología",
+                id_centro = 2,
+                dia_atencion = "VIERNES",
+                dni = "20000004",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 13,
+                nombre_medico = "Dra. Sofía Castro",
+                especialidad = "Pediatría",
+                id_centro = 2,
+                dia_atencion = "JUEVES",
+                dni = "20000005",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 14,
+                nombre_medico = "Dra. Patricia Mendoza",
+                especialidad = "Neurología",
+                id_centro = 2,
+                dia_atencion = "LUNES",
+                dni = "20000006",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 15,
+                nombre_medico = "Dr. Manuel Delgado",
+                especialidad = "Gastroenterología",
+                id_centro = 2,
+                dia_atencion = "MIÉRCOLES",
+                dni = "20000007",
+                contrasena = "medico123"
+            )
+        )
+        db.medicoDao().insertarMedico(
+            Medico(
+                id_medico = 16,
+                nombre_medico = "Dra. Lucía Valdivia",
+                especialidad = "Oftalmología",
+                id_centro = 2,
+                dia_atencion = "VIERNES",
+                dni = "20000008",
+                contrasena = "medico123"
+            )
         )
     }
 }
