@@ -2,6 +2,7 @@ package com.example.essalud.db.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 //porsiaca
+//ay
 
 @Entity(tableName = "tabla_pacientes")
 data class Paciente(

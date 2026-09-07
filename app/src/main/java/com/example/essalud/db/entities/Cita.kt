@@ -1,4 +1,5 @@
 package com.example.essalud.db.entities
+//ay
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
