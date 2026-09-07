@@ -28,5 +28,10 @@ class HomeActivity : AppCompatActivity() {
         binding.cardAtenciones.setOnClickListener {
             startActivity(Intent(this, AtencionesRealizadas::class.java))
         }
+
+        //recetas
+        binding.cardRecetas.setOnClickListener {
+            startActivity(Intent(this, Recetas::class.java))
+        }
     }
 }
