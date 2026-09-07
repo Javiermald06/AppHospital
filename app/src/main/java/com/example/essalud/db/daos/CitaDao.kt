@@ -10,42 +10,25 @@ import com.example.essalud.db.entities.Cita
 @Dao
 interface CitaDao {
 
+    // 1. INSERTAR CITA (se crea con estado PENDIENTE)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertarCita(cita: Cita): Long
 
-    // Citas activas del paciente
+    // 2. MOSTRAR TODAS LAS CITAS DE UN PACIENTE
     @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita IN ('EN_ESPERA', 'POR_CONFIRMAR', 'ACEPTADA') ORDER BY id_cita DESC")
-    suspend fun obtenerCitasActivas(pacienteId: Int): List<CitaDetallada>
+    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId ORDER BY id_cita DESC")
+    suspend fun obtenerCitasPorPaciente(pacienteId: Int): List<CitaDetallada>
 
-    // Citas completadas / pasadas
+    // 3. MOSTRAR CITAS SEGÚN SU ESTADO (PENDIENTE, ATENDIDO, CANCELADO)
     @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita = 'ATENDIDA' ORDER BY id_cita DESC")
-    suspend fun obtenerAtencionesRealizadas(pacienteId: Int): List<CitaDetallada>
+    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita = :estado ORDER BY id_cita DESC")
+    suspend fun obtenerCitasPorEstado(pacienteId: Int, estado: String): List<CitaDetallada>
 
-    // Respuestas del paciente
-    @Query("UPDATE tabla_citas SET estado_cita = 'ACEPTADA' WHERE id_cita = :idCita")
-    suspend fun aceptarCita(idCita: Int)
-
-    @Query("UPDATE tabla_citas SET estado_cita = 'EN_ESPERA', fecha = 'Pendiente', hora = 'Pendiente' WHERE id_cita = :idCita")
-    suspend fun rechazarCita(idCita: Int)
-
-    @Query("UPDATE tabla_citas SET estado_cita = 'CANCELADA' WHERE id_cita = :idCita")
+    // 4. CANCELAR CITA (acción del usuario)
+    @Query("UPDATE tabla_citas SET estado_cita = 'CANCELADO' WHERE id_cita = :idCita")
     suspend fun cancelarCita(idCita: Int)
 
-    // Acciones del médico / admin
-    @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE id_medico = :idMedico AND estado_cita = 'EN_ESPERA' ORDER BY fecha_creacion ASC")
-    suspend fun obtenerCitasEnEsperaPorMedico(idMedico: Int): List<CitaDetallada>
-
-    @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE estado_cita = 'EN_ESPERA' ORDER BY fecha_creacion ASC")
-    suspend fun obtenerTodasCitasEnEspera(): List<CitaDetallada>
-
-    @Query("UPDATE tabla_citas SET fecha = :fecha, hora = :hora, estado_cita = 'POR_CONFIRMAR' WHERE id_cita = :idCita")
-    suspend fun asignarTurno(idCita: Int, fecha: String, hora: String)
-
-    // Comprueba disponibilidad para evitar duplicados en los turnos
-    @Query("SELECT COUNT(*) FROM tabla_citas WHERE id_medico = :idMedico AND fecha = :fecha AND hora = :hora AND estado_cita IN ('POR_CONFIRMAR', 'ACEPTADA')")
-    suspend fun contarTurnosOcupados(idMedico: Int, fecha: String, hora: String): Int
+    // 5. MARCAR COMO ATENDIDO (cuando pase la fecha o se complete la cita)
+    @Query("UPDATE tabla_citas SET estado_cita = 'ATENDIDO' WHERE id_cita = :idCita")
+    suspend fun marcarComoAtendido(idCita: Int)
 }

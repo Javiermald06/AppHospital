@@ -1,13 +1,14 @@
 package com.example.essalud
-//ay
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.essalud.databinding.ActivityMainBinding
 import com.example.essalud.db.AppDatabase
 import com.example.essalud.db.entities.CentroSalud
+import com.example.essalud.db.entities.Cita
 import com.example.essalud.db.entities.Medico
 import com.example.essalud.db.entities.Paciente
 import kotlinx.coroutines.Dispatchers
@@ -245,6 +246,40 @@ class MainActivity : AppCompatActivity() {
                 dni = "20000008",
                 contrasena = "medico123"
             )
+        )// ==============================================================
+        // 4. SIMULACIÓN: 2 CITAS YA ATENDIDAS PARA JAVIER (id_paciente = 1)
+        // ==============================================================
+
+        // Cita 1: Dr. Carlos Ramírez (Medicina General - Lunes)
+        // Fecha simulada pasada: Lunes 24/08/2026
+        db.citaDao().insertarCita(
+            Cita(
+                id_cita = 1,
+                id_paciente = 1,
+                id_medico = 1,
+                id_centro = 1,
+                fecha = "24/08/2026",
+                hora = "09:00 AM",
+                estado_cita = "ATENDIDO",
+                fecha_creacion = "20/08/2026 10:15"
+            )
         )
+
+        // Cita 2: Dra. Elena Ramos (Cardiología - Martes)
+        // Fecha simulada pasada: Martes 01/09/2026
+        db.citaDao().insertarCita(
+            Cita(
+                id_cita = 2,
+                id_paciente = 1,
+                id_medico = 2,
+                id_centro = 1,
+                fecha = "01/09/2026",
+                hora = "10:30 AM",
+                estado_cita = "ATENDIDO",
+                fecha_creacion = "28/08/2026 16:40"
+            )
+        )
+
+        Log.d("SIMULACION", "2 Citas simuladas con estado ATENDIDO insertadas correctamente.")
     }
 }

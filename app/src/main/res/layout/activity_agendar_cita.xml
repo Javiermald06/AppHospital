@@ -135,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Selecciona especialidad y día"
+                android:hint="Selecciona especialidad - día"
                 app:boxCornerRadiusTopStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -162,6 +162,9 @@
                 android:textStyle="bold"
                 android:backgroundTint="#007ED2"
                 app:cornerRadius="16dp" />
+
+
+
         </LinearLayout>
 
         <!-- ========================= -->

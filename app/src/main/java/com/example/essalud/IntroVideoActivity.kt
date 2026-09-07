@@ -32,7 +32,6 @@ class IntroVideoActivity : AppCompatActivity() {
         videoIntro.setOnCompletionListener {
             irAHome()
         }
-
         // En caso de error -> Home directo
         videoIntro.setOnErrorListener { _, _, _ ->
             irAHome()

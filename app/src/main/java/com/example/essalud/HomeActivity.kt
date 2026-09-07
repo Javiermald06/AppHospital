@@ -22,5 +22,8 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AgendarCitaActivity::class.java)
             startActivity(intent)
         }
+        binding.cardAtenciones.setOnClickListener {
+            startActivity(Intent(this, AtencionesRealizadas::class.java))
+        }
     }
 }
