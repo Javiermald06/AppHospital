@@ -1,83 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://android.com"
-    xmlns:tools="http://android.com"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F8FAFC"
     tools:context=".MainActivity">
 
+    <!-- IMAGEN DE FONDO -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo"
+        android:scaleType="centerCrop"
+        android:contentDescription="Fondo" />
+
+    <!-- CONTENIDO SUPERPUESTO -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="28dp"
-        android:gravity="center_horizontal">
+        android:padding="28dp">
 
-        <!-- Espaciador Superior -->
-        <Space
+        <!-- SECCIÓN SUPERIOR Y CENTRAL (Logo + Título + Info) -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <!-- CONTENEDOR DEL LOGO ESTILIZADO ESSALUD -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            app:cardCornerRadius="55dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="#0072CE"
-            app:strokeWidth="4dp"
-            app:strokeColor="#FFFFFF"
-            android:layout_marginBottom="16dp">
+            <!-- LOGO SENATI ELEVADO -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E2E8F0"
+                android:layout_marginBottom="24dp">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <!-- Ícono de Cruz Médica / Corazón que simula el Logo de EsSalud -->
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@android:drawable/ic_menu_add"
-                    app:tint="#FFFFFF"
-                    tools:ignore="UseAppTint" />
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:padding="16dp"
+                    android:src="@drawable/senati"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Logo Senati" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <!-- TEXTOS DE BIENVENIDA -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EsSenatino"
-            android:textColor="#0072CE"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-black"
-            android:letterSpacing="0.05" />
+            <!-- TÍTULO DE LA APP -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EsSenatino"
+                android:textColor="#0F172A"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-black" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#64748B"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="36dp" />
+            <!-- SUBTÍTULO / PROPÓSITO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Módulo de Citas y Atención Médica"
+                android:textColor="#64748B"
+                android:textSize="15sp"
+                android:textStyle="normal" />
 
-        <!-- BOTÓN: INGRESAR DIRECTAMENTE -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnIniciarSesion"
+            <!-- TARJETA INFORMATIVA DE PACIENTE DETECTADO -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E2E8F0"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        app:tint="#0072CE"
+                        tools:ignore="UseAppTint" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sesión activa"
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Javier • DNI 12345678"
+                            android:textColor="#1E293B"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Listo"
+                        android:textColor="#16A34A"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:background="#DCFCE7"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <!-- SECCIÓN INFERIOR ANCLADA (Botón + pie) -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Ingresar"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#0072CE"
-            app:cornerRadius="16dp"
-            app:elevation="4dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnIniciarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Ingresar a la plataforma"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#0072CE"
+                app:cornerRadius="16dp"
+                app:elevation="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Versión demo • Red Asistencial Tacna"
+                android:textColor="#94A3B8"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+</FrameLayout>
