@@ -5,6 +5,7 @@ import androidx.room.Relation
 import com.example.essalud.db.entities.CentroSalud
 import com.example.essalud.db.entities.Cita
 import com.example.essalud.db.entities.Medico
+import com.example.essalud.db.entities.Paciente
 
 data class CitaDetallada(
     @Embedded val cita: Cita,
@@ -19,5 +20,11 @@ data class CitaDetallada(
         parentColumn = "id_centro",
         entityColumn = "id_centro"
     )
-    val centro: CentroSalud
+    val centro: CentroSalud,
+
+    @Relation(
+        parentColumn = "id_paciente",
+        entityColumn = "id_paciente"
+    )
+    val paciente: Paciente
 )

@@ -15,12 +15,12 @@ interface CitaDao {
 
     // Citas activas del paciente
     @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita IN ('EN_ESPERA', 'POR_CONFIRMAR', 'ACEPTADA')")
+    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita IN ('EN_ESPERA', 'POR_CONFIRMAR', 'ACEPTADA') ORDER BY id_cita DESC")
     suspend fun obtenerCitasActivas(pacienteId: Int): List<CitaDetallada>
 
     // Citas completadas / pasadas
     @Transaction
-    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita = 'ATENDIDA'")
+    @Query("SELECT * FROM tabla_citas WHERE id_paciente = :pacienteId AND estado_cita = 'ATENDIDA' ORDER BY id_cita DESC")
     suspend fun obtenerAtencionesRealizadas(pacienteId: Int): List<CitaDetallada>
 
     // Respuestas del paciente
@@ -34,13 +34,18 @@ interface CitaDao {
     suspend fun cancelarCita(idCita: Int)
 
     // Acciones del médico / admin
-    @Query("SELECT * FROM tabla_citas WHERE estado_cita = 'EN_ESPERA'")
-    suspend fun obtenerCitasEnEspera(): List<Cita>
+    @Transaction
+    @Query("SELECT * FROM tabla_citas WHERE id_medico = :idMedico AND estado_cita = 'EN_ESPERA' ORDER BY fecha_creacion ASC")
+    suspend fun obtenerCitasEnEsperaPorMedico(idMedico: Int): List<CitaDetallada>
+
+    @Transaction
+    @Query("SELECT * FROM tabla_citas WHERE estado_cita = 'EN_ESPERA' ORDER BY fecha_creacion ASC")
+    suspend fun obtenerTodasCitasEnEspera(): List<CitaDetallada>
 
     @Query("UPDATE tabla_citas SET fecha = :fecha, hora = :hora, estado_cita = 'POR_CONFIRMAR' WHERE id_cita = :idCita")
     suspend fun asignarTurno(idCita: Int, fecha: String, hora: String)
 
-    // Comprueba disponibilidad para evitar duplicados en los 8 turnos diarios
+    // Comprueba disponibilidad para evitar duplicados en los turnos
     @Query("SELECT COUNT(*) FROM tabla_citas WHERE id_medico = :idMedico AND fecha = :fecha AND hora = :hora AND estado_cita IN ('POR_CONFIRMAR', 'ACEPTADA')")
     suspend fun contarTurnosOcupados(idMedico: Int, fecha: String, hora: String): Int
 }

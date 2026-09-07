@@ -1,129 +1,121 @@
 package com.example.essalud
 
-import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.essalud.databinding.ActivityAgendarCitaBinding
-import com.google.android.material.button.MaterialButton
+import com.example.essalud.db.AppDatabase
+import com.example.essalud.db.entities.Cita
+import com.example.essalud.db.entities.Medico
 import com.google.android.material.card.MaterialCardView
-import java.util.Calendar
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AgendarCitaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAgendarCitaBinding
+    private lateinit var db: AppDatabase
 
-    // Variables para simular y retener las elecciones del usuario
-    private var especialidadSeleccionada: String = "Medicina General"
-    private var centroSeleccionado: String = "Hospital III Daniel Alcides Carrión"
-    private var fechaSeleccionada: String = "15 de septiembre de 2026"
-    private var horaSeleccionada: String = "10:30"
-    private var medicoAsignado: String = "Dr. Carlos Ramírez"
+    private var especialidadSeleccionada: String = ""
+    private var diaAtencionSeleccionado: String = ""
+    private var centroSeleccionadoId: Int = 1
+    private var centroSeleccionadoNombre: String = "Hospital III Daniel Alcides Carrión"
+    private var medicoAsignado: Medico? = null
+
+    // ID del paciente Javier (precargado en MainActivity)
+    private val idPacienteJavier: Int = 1
+
+    private data class OpcionEspecialidad(val especialidad: String, val dia: String) {
+        override fun toString(): String = "$especialidad — (Disponible: $dia)"
+    }
+
+    private val listaOpciones = listOf(
+        OpcionEspecialidad("Medicina General", "LUNES"),
+        OpcionEspecialidad("Neurología", "LUNES"),
+        OpcionEspecialidad("Cardiología", "MARTES"),
+        OpcionEspecialidad("Traumatología", "MIÉRCOLES"),
+        OpcionEspecialidad("Gastroenterología", "MIÉRCOLES"),
+        OpcionEspecialidad("Pediatría", "JUEVES"),
+        OpcionEspecialidad("Dermatología", "VIERNES"),
+        OpcionEspecialidad("Oftalmología", "VIERNES")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAgendarCitaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Listas de vistas para control visual
-        val puntos = listOf(binding.punto1, binding.punto2, binding.punto3, binding.punto4)
-        val lineas = listOf(binding.linea1, binding.linea2, binding.linea3)
+        db = AppDatabase.getDatabase(applicationContext)
 
-        val cardsCentro = listOf(
-            binding.cardCentro1,
-            binding.cardCentro2
-        )
+        configurarIndicadorPasos()
+        configurarDesplegableUnico()
+        configurarSeleccionCentro()
+        configurarBotonesNavegacionYConfirmacion()
 
-        val botonesHora = listOf(
-            binding.btn0900,
-            binding.btn0930,
-            binding.btn1000,
-            binding.btn1030,
-            binding.btn1100,
-            binding.btn1130
-        )
+        mostrarPaso(1)
+    }
 
-        // Función para cambiar de paso y actualizar el indicador superior
-        fun mostrarPaso(paso: Int) {
-            binding.paso1.visibility = if (paso == 1) View.VISIBLE else View.GONE
-            binding.paso2.visibility = if (paso == 2) View.VISIBLE else View.GONE
-            binding.paso3.visibility = if (paso == 3) View.VISIBLE else View.GONE
-            binding.paso4.visibility = if (paso == 4) View.VISIBLE else View.GONE
+    private fun mostrarPaso(paso: Int) {
+        binding.paso1.visibility = if (paso == 1) View.VISIBLE else View.GONE
+        binding.paso2.visibility = if (paso == 2) View.VISIBLE else View.GONE
+        binding.paso3.visibility = if (paso == 3) View.VISIBLE else View.GONE
 
-            // Círculos numerados
-            puntos.forEachIndexed { index, textView ->
-                val numPaso = index + 1
-                if (numPaso <= paso) {
-                    textView.setBackgroundResource(R.drawable.bg_step_active)
-                    textView.setTextColor(Color.WHITE)
-                } else {
-                    textView.setBackgroundResource(R.drawable.bg_step_inactive)
-                    textView.setTextColor(Color.parseColor("#64748B"))
-                }
-            }
+        val puntos = listOf(binding.punto1, binding.punto2, binding.punto3)
+        val lineas = listOf(binding.linea1, binding.linea2)
 
-            // Líneas conectoras
-            lineas.forEachIndexed { index, view ->
-                if (index < paso - 1) {
-                    view.setBackgroundColor(Color.parseColor("#007ED2"))
-                } else {
-                    view.setBackgroundColor(Color.parseColor("#CBD5E1"))
-                }
+        puntos.forEachIndexed { index, textView ->
+            val numPaso = index + 1
+            if (numPaso <= paso) {
+                textView.setBackgroundResource(R.drawable.bg_step_active)
+                textView.setTextColor(Color.WHITE)
+            } else {
+                textView.setBackgroundResource(R.drawable.bg_step_inactive)
+                textView.setTextColor(Color.parseColor("#64748B"))
             }
         }
 
-        // ==========================================
-        // PASO 1: SELECCIÓN DE ESPECIALIDAD (Actualizado)
-        // ==========================================
-        
-        // 1. Aquí colocas todas tus especialidades (puedes agregar las 30 aquí)
-        val listaEspecialidades = arrayOf(
-            "Medicina General", 
-            "Cardiología", 
-            "Traumatología",
-            "Dermatología",
-            "Pediatría",
-            "Neurología",
-            "Gastroenterología",
-            "Oftalmología" // ... agrega el resto aquí
-        )
+        lineas.forEachIndexed { index, view ->
+            if (index < paso - 1) {
+                view.setBackgroundColor(Color.parseColor("#007ED2"))
+            } else {
+                view.setBackgroundColor(Color.parseColor("#CBD5E1"))
+            }
+        }
+    }
 
-        // 2. Crear el adaptador para el menú desplegable
-        val adapterEspecialidades = android.widget.ArrayAdapter(
+    private fun configurarIndicadorPasos() {
+        binding.btnVolver.setOnClickListener { finish() }
+    }
+
+    private fun configurarDesplegableUnico() {
+        val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_dropdown_item_1line,
-            listaEspecialidades
+            listaOpciones
         )
+        binding.dropdownEspecialidad.setAdapter(adapter)
 
-        // 3. Vincular el adaptador al AutoCompleteTextView
-        binding.dropdownEspecialidad.setAdapter(adapterEspecialidades)
-
-        // 4. Capturar la opción que elija el usuario
         binding.dropdownEspecialidad.setOnItemClickListener { parent, _, position, _ ->
-            // Guardamos la especialidad seleccionada
-            especialidadSeleccionada = parent.getItemAtPosition(position).toString()
-            
-            // Lógica temporal para asignar un médico según la especialidad
-            medicoAsignado = when (especialidadSeleccionada) {
-                "Medicina General" -> "Dr. Carlos Ramírez"
-                "Cardiología" -> "Dra. Elena Ramos"
-                "Traumatología" -> "Dr. Marco Véliz"
-                else -> "Médico por asignar"
-            }
+            val seleccion = parent.getItemAtPosition(position) as OpcionEspecialidad
+            especialidadSeleccionada = seleccion.especialidad.trim()
+            diaAtencionSeleccionado = seleccion.dia.trim()
         }
+    }
 
-        binding.btnSiguiente1.setOnClickListener {
-            mostrarPaso(2)
-        }
-
-        // ==========================================
-        // PASO 2: SELECCIÓN DE CENTRO ASISTENCIAL
-        // ==========================================
-        fun marcarCentro(cardSeleccionada: MaterialCardView, centro: String) {
-            cardsCentro.forEach { card ->
+    private fun configurarSeleccionCentro() {
+        fun marcarCentro(cardSeleccionada: MaterialCardView, idCentro: Int, nombreCentro: String) {
+            val cards = listOf(binding.cardCentro1, binding.cardCentro2)
+            cards.forEach { card ->
                 card.strokeWidth = 0
                 card.strokeColor = Color.TRANSPARENT
                 card.setCardBackgroundColor(Color.WHITE)
@@ -132,111 +124,121 @@ class AgendarCitaActivity : AppCompatActivity() {
             cardSeleccionada.strokeColor = Color.parseColor("#007ED2")
             cardSeleccionada.setCardBackgroundColor(Color.parseColor("#EFF6FF"))
 
-            centroSeleccionado = centro
+            centroSeleccionadoId = idCentro
+            centroSeleccionadoNombre = nombreCentro
         }
 
         binding.cardCentro1.setOnClickListener {
-            marcarCentro(binding.cardCentro1, "Hospital III Daniel Alcides Carrión")
+            marcarCentro(binding.cardCentro1, 1, "Hospital III Daniel Alcides Carrión")
         }
         binding.cardCentro2.setOnClickListener {
-            marcarCentro(binding.cardCentro2, "Centro Médico Metropolitano")
+            marcarCentro(binding.cardCentro2, 2, "Centro Médico Metropolitano")
         }
 
-        // Marcar el primer centro por defecto
-        marcarCentro(binding.cardCentro1, "Hospital III Daniel Alcides Carrión")
+        marcarCentro(binding.cardCentro1, 1, "Hospital III Daniel Alcides Carrión")
+    }
 
+    private fun configurarBotonesNavegacionYConfirmacion() {
+        // Paso 1 -> Paso 2
+        binding.btnSiguiente1.setOnClickListener {
+            if (especialidadSeleccionada.isEmpty()) {
+                Toast.makeText(this, "Por favor, selecciona una especialidad", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            mostrarPaso(2)
+        }
+
+        // Paso 2 -> Paso 1
         binding.btnAnterior2.setOnClickListener {
             mostrarPaso(1)
         }
+
+        // Paso 2 -> Paso 3
         binding.btnSiguiente2.setOnClickListener {
-            mostrarPaso(3)
-        }
+            lifecycleScope.launch(Dispatchers.IO) {
+                val medico = db.medicoDao().obtenerMedicoPorEspecialidadYCentro(
+                    especialidadSeleccionada,
+                    centroSeleccionadoId
+                )
 
-        // ==========================================
-        // PASO 3: FECHA Y HORA
-        // ==========================================
-        binding.cardFecha.setOnClickListener {
-            val calendario = Calendar.getInstance()
-            val anio = calendario.get(Calendar.YEAR)
-            val mes = calendario.get(Calendar.MONTH)
-            val dia = calendario.get(Calendar.DAY_OF_MONTH)
+                withContext(Dispatchers.Main) {
+                    medicoAsignado = medico
+                    binding.txtConfirmEspecialidad.text = especialidadSeleccionada
+                    binding.txtConfirmDiaAtencion.text = "Día de atención: $diaAtencionSeleccionado"
+                    binding.txtConfirmCentro.text = centroSeleccionadoNombre
 
-            val selectorFecha = DatePickerDialog(
-                this,
-                { _, anioSelec, mesSelec, diaSelec ->
-                    val nombresMeses = arrayOf(
-                        "enero", "febrero", "marzo", "abril", "mayo", "junio",
-                        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
-                    )
-                    fechaSeleccionada = "$diaSelec de ${nombresMeses[mesSelec]} de $anioSelec"
-                    binding.txtFecha.text = fechaSeleccionada
-                },
-                anio,
-                mes,
-                dia
-            )
-            selectorFecha.show()
-        }
+                    if (medico != null) {
+                        binding.txtConfirmMedico.text = "${medico.nombre_medico} (${medico.especialidad})"
+                        binding.btnConfirmar.isEnabled = true
+                    } else {
+                        binding.txtConfirmMedico.text = "No hay médico asignado para esta sede"
+                        binding.btnConfirmar.isEnabled = false
+                        Toast.makeText(this@AgendarCitaActivity, "No se encontró médico disponible", Toast.LENGTH_SHORT).show()
+                    }
 
-        fun marcarHora(botonSeleccionado: MaterialButton, hora: String) {
-            botonesHora.forEach { boton ->
-                boton.setBackgroundColor(Color.WHITE)
-                boton.setTextColor(Color.parseColor("#007ED2"))
-                boton.strokeColor = getColorStateList(android.R.color.holo_blue_dark)
-            }
-            botonSeleccionado.setBackgroundColor(Color.parseColor("#007ED2"))
-            botonSeleccionado.setTextColor(Color.WHITE)
-
-            horaSeleccionada = hora
-        }
-
-        botonesHora.forEach { boton ->
-            boton.setOnClickListener {
-                marcarHora(boton, boton.text.toString())
+                    mostrarPaso(3)
+                }
             }
         }
 
-        // Marcar la hora predeterminada
-        marcarHora(binding.btn1030, "10:30")
-
+        // Paso 3 -> Paso 2
         binding.btnAnterior3.setOnClickListener {
             mostrarPaso(2)
         }
 
-        // Volcar datos al resumen antes de pasar al paso 4
-        binding.btnSiguiente3.setOnClickListener {
-            binding.txtConfirmEspecialidad.text = especialidadSeleccionada
-            binding.txtConfirmCentro.text = centroSeleccionado
-            binding.txtConfirmFecha.text = fechaSeleccionada
-            binding.txtConfirmHora.text = "$horaSeleccionada hrs"
-            binding.txtConfirmMedico.text = medicoAsignado
-
-            mostrarPaso(4)
-        }
-
-        // ==========================================
-        // PASO 4: CONFIRMACIÓN
-        // ==========================================
-        binding.btnAnterior4.setOnClickListener {
-            mostrarPaso(3)
-        }
-
+        // Confirmar y Guardar en SQLite
         binding.btnConfirmar.setOnClickListener {
-            Toast.makeText(
-                this,
-                "¡Cita con $medicoAsignado reservada para el $fechaSeleccionada!",
-                Toast.LENGTH_LONG
-            ).show()
-            finish()
+            val medico = medicoAsignado
+            if (medico == null) {
+                Toast.makeText(this, "Error: No hay médico asignado.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            binding.btnConfirmar.isEnabled = false
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val fechaFormateada = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+
+                    val nuevaCita = Cita(
+                        id_cita = 0, // 0 para que Room y SQLite apliquen autoGenerate
+                        id_paciente = idPacienteJavier,
+                        id_medico = medico.id_medico,
+                        id_centro = centroSeleccionadoId,
+                        fecha = "Pendiente",
+                        hora = "Pendiente",
+                        estado_cita = "EN_ESPERA",
+                        fecha_creacion = fechaFormateada
+                    )
+
+                    val idInsertado = db.citaDao().insertarCita(nuevaCita)
+                    Log.d("ROOM_CITA", "ID Cita generada exitosamente: $idInsertado")
+
+                    withContext(Dispatchers.Main) {
+                        if (idInsertado > 0) {
+                            AlertDialog.Builder(this@AgendarCitaActivity)
+                                .setTitle("¡Cita Solicitada!")
+                                .setMessage("Tu cita se registró con éxito en la base de datos (ID: #$idInsertado) para ${medico.nombre_medico}. Su estado es EN ESPERA.")
+                                .setPositiveButton("Aceptar") { _, _ -> finish() }
+                                .setCancelable(false)
+                                .show()
+                        } else {
+                            binding.btnConfirmar.isEnabled = true
+                            Toast.makeText(this@AgendarCitaActivity, "No se pudo insertar la cita en la base de datos.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("ROOM_CITA", "Error al insertar cita", e)
+                    withContext(Dispatchers.Main) {
+                        binding.btnConfirmar.isEnabled = true
+                        AlertDialog.Builder(this@AgendarCitaActivity)
+                            .setTitle("Error de SQLite")
+                            .setMessage("Detalle: ${e.localizedMessage}")
+                            .setPositiveButton("Cerrar", null)
+                            .show()
+                    }
+                }
+            }
         }
-
-        // Botón superior de retorno
-        binding.btnVolver.setOnClickListener {
-            finish()
-        }
-
-        // Iniciar en el paso 1
-        mostrarPaso(1)
-
     }
 }

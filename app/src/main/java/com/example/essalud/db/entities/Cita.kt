@@ -1,9 +1,12 @@
 package com.example.essalud.db.entities
+
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-//porsiaca
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Entity(
     tableName = "tabla_citas",
@@ -42,5 +45,5 @@ data class Cita(
     val fecha: String = "Pendiente",
     val hora: String = "Pendiente",
     val estado_cita: String = "EN_ESPERA", // "EN_ESPERA", "POR_CONFIRMAR", "ACEPTADA", "CANCELADA", "ATENDIDA"
-    val fecha_creacion: Long = System.currentTimeMillis()
+    val fecha_creacion: String = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
 )

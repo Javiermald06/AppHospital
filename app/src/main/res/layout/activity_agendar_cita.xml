@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,11 +40,9 @@
                 android:textColor="#1E293B"
                 android:textSize="26sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
-
-        <!-- INDICADOR DE PASOS -->
+        <!-- INDICADOR DE PASOS (1 -> 2 -> 3) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +50,6 @@
             android:orientation="horizontal"
             android:layout_marginBottom="28dp">
 
-            <!-- PASO 1 -->
             <TextView
                 android:id="@+id/punto1"
                 android:layout_width="32dp"
@@ -66,11 +62,10 @@
 
             <View
                 android:id="@+id/linea1"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="3dp"
                 android:background="#CBD5E1" />
 
-            <!-- PASO 2 -->
             <TextView
                 android:id="@+id/punto2"
                 android:layout_width="32dp"
@@ -83,11 +78,10 @@
 
             <View
                 android:id="@+id/linea2"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="3dp"
                 android:background="#CBD5E1" />
 
-            <!-- PASO 3 -->
             <TextView
                 android:id="@+id/punto3"
                 android:layout_width="32dp"
@@ -97,31 +91,11 @@
                 android:textColor="#64748B"
                 android:textStyle="bold"
                 android:background="@drawable/bg_step_inactive" />
-
-            <View
-                android:id="@+id/linea3"
-                android:layout_width="50dp"
-                android:layout_height="3dp"
-                android:background="#CBD5E1" />
-
-            <!-- PASO 4 -->
-            <TextView
-                android:id="@+id/punto4"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="#64748B"
-                android:textStyle="bold"
-                android:background="@drawable/bg_step_inactive" />
-
         </LinearLayout>
-
 
         <!-- ========================= -->
         <!-- PASO 1: ESPECIALIDAD -->
         <!-- ========================= -->
-
         <LinearLayout
             android:id="@+id/paso1"
             android:layout_width="match_parent"
@@ -132,7 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paso 1 de 4"
+                android:text="Paso 1 de 3"
                 android:textColor="#007ED2"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -151,18 +125,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="20dp"
-                android:text="Selecciona una especialidad médica."
+                android:text="Selecciona una especialidad médica. Cada una indica el día hábil en que atiende el especialista (el médico te asignará luego la fecha y turno)."
                 android:textColor="#64748B"
                 android:textSize="15sp" />
 
-
-            <!-- Menú Desplegable de Especialidades -->
+            <!-- Menú Desplegable Único -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Selecciona una especialidad"
+                android:hint="Selecciona especialidad y día"
                 app:boxCornerRadiusTopStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -176,9 +149,7 @@
                     android:inputType="none"
                     android:textColor="#1E293B"
                     android:padding="16dp" />
-
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSiguiente1"
@@ -191,14 +162,11 @@
                 android:textStyle="bold"
                 android:backgroundTint="#007ED2"
                 app:cornerRadius="16dp" />
-
         </LinearLayout>
 
-
         <!-- ========================= -->
-        <!-- PASO 2: CENTRO -->
+        <!-- PASO 2: CENTRO ASISTENCIAL -->
         <!-- ========================= -->
-
         <LinearLayout
             android:id="@+id/paso2"
             android:layout_width="match_parent"
@@ -209,7 +177,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paso 2 de 4"
+                android:text="Paso 2 de 3"
                 android:textColor="#007ED2"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -231,7 +199,6 @@
                 android:text="Selecciona el centro asistencial."
                 android:textColor="#64748B"
                 android:textSize="15sp" />
-
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCentro1"
@@ -276,16 +243,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Centro asistencial"
+                            android:text="Centro asistencial - Tacna"
                             android:textColor="#64748B"
                             android:textSize="13sp" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCentro2"
@@ -330,18 +293,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Centro asistencial"
+                            android:text="Centro asistencial - Tacna"
                             android:textColor="#64748B"
                             android:textSize="13sp" />
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
-
-            <!-- BOTONES -->
+            <!-- BOTONES NAVEGACIÓN PASO 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -370,16 +329,12 @@
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#007ED2"
                     app:cornerRadius="16dp" />
-
             </LinearLayout>
-
         </LinearLayout>
 
-
         <!-- ========================= -->
-        <!-- PASO 3: FECHA Y HORA -->
+        <!-- PASO 3: CONFIRMACIÓN Y REGISTRO -->
         <!-- ========================= -->
-
         <LinearLayout
             android:id="@+id/paso3"
             android:layout_width="match_parent"
@@ -390,227 +345,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paso 3 de 4"
-                android:textColor="#007ED2"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Elige fecha y hora"
-                android:textColor="#1E293B"
-                android:textSize="23sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="18dp"
-                android:text="Selecciona uno de los horarios disponibles."
-                android:textColor="#64748B"
-                android:textSize="15sp" />
-
-
-            <!-- FECHA -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFecha"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_marginBottom="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@android:drawable/ic_menu_today"
-                        app:tint="#007ED2" />
-
-                    <TextView
-                        android:id="@+id/txtFecha"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:text="Seleccionar fecha"
-                        android:textColor="#1E293B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@android:drawable/ic_media_next"
-                        app:tint="#94A3B8" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Horarios disponibles"
-                android:textColor="#1E293B"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn0900"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="5dp"
-                    android:text="09:00"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn0930"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="09:30"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn1000"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:text="10:00"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn1030"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="5dp"
-                    android:text="10:30"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn1100"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="11:00"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn1130"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"
-                    android:text="11:30"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#007ED2" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAnterior3"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:text="Anterior"
-                    android:textColor="#007ED2"
-                    app:cornerRadius="16dp"
-                    app:strokeColor="#007ED2" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSiguiente3"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:text="Continuar"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#007ED2"
-                    app:cornerRadius="16dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <!-- ========================= -->
-        <!-- PASO 4: CONFIRMACIÓN -->
-        <!-- ========================= -->
-
-        <LinearLayout
-            android:id="@+id/paso4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Paso 4 de 4"
+                android:text="Paso 3 de 3"
                 android:textColor="#007ED2"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -629,10 +364,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="20dp"
-                android:text="Revisa que los datos sean correctos."
+                android:text="Tu solicitud se enviará en estado 'EN ESPERA' hasta que el médico le asigne la fecha y hora designadas."
                 android:textColor="#64748B"
                 android:textSize="15sp" />
-
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -657,37 +391,48 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtConfirmDiaAtencion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Día de atención: LUNES"
+                        android:textColor="#007ED2"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
                         android:id="@+id/txtConfirmCentro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:text="Hospital III Daniel Alcides Carrión"
                         android:textColor="#64748B"
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/txtConfirmFecha"
+                        android:id="@+id/txtConfirmFechaHora"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="15 de septiembre de 2026"
+                        android:layout_marginTop="6dp"
+                        android:text="Fecha y hora: Por asignar por el médico"
                         android:textColor="#64748B"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/txtConfirmHora"
+                        android:id="@+id/txtConfirmEstado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="10:30 a. m."
-                        android:textColor="#64748B"
-                        android:textSize="15sp" />
+                        android:text="Estado: EN ESPERA"
+                        android:textColor="#E65100"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginBottom="18dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
                         android:background="#E2E8F0" />
 
                     <TextView
@@ -702,16 +447,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Dr. Franksito Tilinaso "
+                        android:text="Dr. Carlos Ramírez"
                         android:textColor="#1E293B"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
-
+            <!-- BOTONES PASO 3 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -719,7 +462,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAnterior4"
+                    android:id="@+id/btnAnterior3"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="56dp"
@@ -736,21 +479,17 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
-                    android:text="Confirmar"
+                    android:text="Confirmar Cita"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:backgroundTint="#007ED2"
                     app:cornerRadius="16dp" />
-
             </LinearLayout>
-
         </LinearLayout>
-
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
     </LinearLayout>
-
 </ScrollView>
