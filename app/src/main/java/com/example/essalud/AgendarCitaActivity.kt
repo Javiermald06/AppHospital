@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.essalud.databinding.ActivityAgendarCitaBinding
 import com.example.essalud.db.AppDatabase
+import com.example.essalud.db.daos.EspecialidadDiaDto
 import com.example.essalud.db.entities.Cita
 import com.example.essalud.db.entities.Medico
 import com.google.android.material.card.MaterialCardView
@@ -35,21 +36,6 @@ class AgendarCitaActivity : AppCompatActivity() {
 
     // ID del paciente Javier (precargado en MainActivity)
     private val idPacienteJavier: Int = 1
-
-    private data class OpcionEspecialidad(val especialidad: String, val dia: String) {
-        override fun toString(): String = "$especialidad — (Disponible: $dia)"
-    }
-
-    private val listaOpciones = listOf(
-        OpcionEspecialidad("Medicina General", "LUNES"),
-        OpcionEspecialidad("Neurología", "LUNES"),
-        OpcionEspecialidad("Cardiología", "MARTES"),
-        OpcionEspecialidad("Traumatología", "MIÉRCOLES"),
-        OpcionEspecialidad("Gastroenterología", "MIÉRCOLES"),
-        OpcionEspecialidad("Pediatría", "JUEVES"),
-        OpcionEspecialidad("Dermatología", "VIERNES"),
-        OpcionEspecialidad("Oftalmología", "VIERNES")
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,18 +84,25 @@ class AgendarCitaActivity : AppCompatActivity() {
         binding.btnVolver.setOnClickListener { finish() }
     }
 
+    // Consulta la base de datos en segundo plano y enlaza al desplegable
     private fun configurarDesplegableUnico() {
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_dropdown_item_1line,
-            listaOpciones
-        )
-        binding.dropdownEspecialidad.setAdapter(adapter)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val listaOpcionesDb = db.medicoDao().obtenerEspecialidadesConDia()
 
-        binding.dropdownEspecialidad.setOnItemClickListener { parent, _, position, _ ->
-            val seleccion = parent.getItemAtPosition(position) as OpcionEspecialidad
-            especialidadSeleccionada = seleccion.especialidad.trim()
-            diaAtencionSeleccionado = seleccion.dia.trim()
+            withContext(Dispatchers.Main) {
+                val adapter = ArrayAdapter(
+                    this@AgendarCitaActivity,
+                    android.R.layout.simple_dropdown_item_1line,
+                    listaOpcionesDb
+                )
+                binding.dropdownEspecialidad.setAdapter(adapter)
+
+                binding.dropdownEspecialidad.setOnItemClickListener { parent, _, position, _ ->
+                    val seleccion = parent.getItemAtPosition(position) as EspecialidadDiaDto
+                    especialidadSeleccionada = seleccion.especialidad.trim()
+                    diaAtencionSeleccionado = seleccion.dia_atencion.trim()
+                }
+            }
         }
     }
 
@@ -202,7 +195,7 @@ class AgendarCitaActivity : AppCompatActivity() {
                     val fechaFormateada = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
 
                     val nuevaCita = Cita(
-                        id_cita = 0, // 0 para que Room y SQLite apliquen autoGenerate
+                        id_cita = 0,
                         id_paciente = idPacienteJavier,
                         id_medico = medico.id_medico,
                         id_centro = centroSeleccionadoId,

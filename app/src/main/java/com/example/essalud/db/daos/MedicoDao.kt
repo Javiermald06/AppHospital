@@ -9,6 +9,10 @@ import com.example.essalud.db.entities.Medico
 
 @Dao
 interface MedicoDao {
+
+    @Query("SELECT DISTINCT especialidad, dia_atencion FROM tabla_medicos ORDER BY especialidad ASC")
+    suspend fun obtenerEspecialidadesConDia(): List<EspecialidadDiaDto>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertarMedico(medico: Medico): Long
 
@@ -25,4 +29,11 @@ interface MedicoDao {
     // Consulta para autenticación del médico
     @Query("SELECT * FROM tabla_medicos WHERE dni = :dni AND contrasena = :contrasena LIMIT 1")
     suspend fun loginMedico(dni: String, contrasena: String): Medico?
+}
+
+data class EspecialidadDiaDto(
+    val especialidad: String,
+    val dia_atencion: String
+) {
+    override fun toString(): String = "$especialidad — (Disponible: $dia_atencion)"
 }

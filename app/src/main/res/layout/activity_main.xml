@@ -23,6 +23,7 @@
         android:padding="28dp">
 
         <!-- SECCIÓN SUPERIOR Y CENTRAL (Logo + Título + Info) -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -30,25 +31,23 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- LOGO SENATI ELEVADO -->
+            <!-- LOGO SENATI-->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 app:cardCornerRadius="28dp"
                 app:cardElevation="6dp"
                 app:cardBackgroundColor="#FFFFFF"
-                app:strokeWidth="1dp"
-                app:strokeColor="#E2E8F0"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="25dp">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:padding="16dp"
                     android:src="@drawable/senati"
                     android:scaleType="fitCenter"
                     android:contentDescription="Logo Senati" />
+
             </com.google.android.material.card.MaterialCardView>
 
             <!-- TÍTULO DE LA APP -->
@@ -93,8 +92,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        app:tint="#0072CE"
-                        tools:ignore="UseAppTint" />
+                        app:tint="#0072CE"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -163,6 +161,7 @@
                 android:text="Versión demo • Red Asistencial Tacna"
                 android:textColor="#94A3B8"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
     </LinearLayout>

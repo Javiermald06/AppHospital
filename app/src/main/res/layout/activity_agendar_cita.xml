@@ -68,13 +68,13 @@
 
             <TextView
                 android:id="@+id/punto2"
-                android:layout_width="32dp"
+                android:layout_width="39dp"
                 android:layout_height="32dp"
+                android:background="@drawable/bg_step_inactive"
                 android:gravity="center"
                 android:text="2"
                 android:textColor="#64748B"
-                android:textStyle="bold"
-                android:background="@drawable/bg_step_inactive" />
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/linea2"
@@ -96,6 +96,7 @@
         <!-- ========================= -->
         <!-- PASO 1: ESPECIALIDAD -->
         <!-- ========================= -->
+
         <LinearLayout
             android:id="@+id/paso1"
             android:layout_width="match_parent"
@@ -147,8 +148,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:textColor="#1E293B"
-                    android:padding="16dp" />
+                    android:padding="16dp"
+                    android:textColor="#1E293B" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -335,9 +336,9 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- ========================= -->
+
         <!-- PASO 3: CONFIRMACIÓN Y REGISTRO -->
-        <!-- ========================= -->
+
         <LinearLayout
             android:id="@+id/paso3"
             android:layout_width="match_parent"
