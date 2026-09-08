@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         // 3. Médicos con su especialidad y día de atención
-        // --- SEDE 1: Hospital III Daniel Alcides Carrión (id_centro = 1) ---
+        // SEDE 1: Hospital III Daniel Alcides Carrión (id_centro = 1)
         db.medicoDao().insertarMedico(
             Medico(
                 id_medico = 1,
